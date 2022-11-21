@@ -22,6 +22,7 @@ functions:
 
   list:
     handler: handler.list
+    timeout: 30
     events:
       - http:
           path: list/{id}
