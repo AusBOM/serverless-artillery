@@ -33,6 +33,7 @@ const awaitScriptDuration = script =>
 //  sorted by timestamp earliest -> latest
 const fetchListOfCalls = async ({ listUrl }) => {
   let retryCount = 10
+  let interval = 50
   while (retryCount > 0) {
     try {
       const response = await fetch(listUrl)
@@ -40,8 +41,9 @@ const fetchListOfCalls = async ({ listUrl }) => {
       return JSON.parse(json)
     } catch (err) {
       log('request for list of calls failed:', err.stack)
+      await new Promise((resolve) => { setTimeout(resolve, interval) }) // eslint-disable-line no-loop-func
       retryCount -= 1
-      await new Promise((resolve) => { setTimeout(resolve, 1000) })
+      interval *= 2
     }
   }
 
