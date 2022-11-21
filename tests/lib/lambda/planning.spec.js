@@ -1258,7 +1258,7 @@ describe('./lib/lambda/taskPlan.js', () => {
         ]
         // NOTE: Prior to implementing the fix to resolve invalid phases, the `expectedPhases2` would have looked like:
         // [ { pause: 1 }, { duration: 0, arrivalRate: 1 }]
-        // This would cause the lambda to run infinitely
+        // This would cause the lambda to run indefinitely
         result = planning.planPerformance(1, script, defaultSettings)
         console.log(JSON.stringify(result, null, 2))
         expect(result.length).to.equal(2)
