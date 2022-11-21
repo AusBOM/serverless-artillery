@@ -1245,6 +1245,33 @@ describe('./lib/lambda/taskPlan.js', () => {
         expect(planning.splitScriptByRequestsPerSecondAndSchedule).to.have.been.called.with.exactly(1, chunk, defaultSettings)
         expect(result.length).to.equal(3)
       })
+      it('correctly adjusts phases with a duration of 0 (intersection.x === phase.duration)', () => {
+        sandbox.restore()
+        script.config.phases = [
+          { duration: 1, arrivalRate: 0, rampTo: 26 },
+        ]
+        const expectedPhases1 = [
+          { duration: 1, arrivalRate: 1, rampTo: 25 },
+        ]
+        const expectedPhases2 = [
+          { duration: 1, arrivalRate: 1 },
+        ]
+        result = planning.planPerformance(1, script, defaultSettings)
+        console.log(JSON.stringify(result, null, 2))
+        expect(result.length).to.equal(2)
+        expect(result[0].config.phases).to.eql(expectedPhases1)
+        expect(result[1].config.phases).to.eql(expectedPhases2)
+      })
+      it('correctly adjusts phases with a duration of 0 (real-world case)', () => {
+        sandbox.restore()
+        script.config.phases = [
+          { duration: 300, arrivalRate: 0, rampTo: 3380 },
+          { duration: 120, arrivalRate: 3380 },
+        ]
+        result = planning.planPerformance(1, script, defaultSettings)
+        expect(result.length).to.be.above(0)
+        result.forEach(rs => rs.config.phases.forEach(rp => expect(rp.duration).not.to.equal(0)))
+      })
     })
 
     describe('#planSamples', () => {
@@ -1280,6 +1307,7 @@ describe('./lib/lambda/taskPlan.js', () => {
         ]
         // Split #1
         result = planning.planPerformance(0, script, defaultSettings)
+        console.log(JSON.stringify(result, null, 2))
         expect(result).to.be.eql(expected)
         expected = [
           { config: { phases: [{ duration: 660, arrivalRate: 147, rampTo: 1 }] }, _genesis: 0, _start: 255000 },
