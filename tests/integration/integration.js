@@ -41,7 +41,7 @@ const fetchListOfCalls = async ({ listUrl }) => {
       return JSON.parse(json)
     } catch (err) {
       log('request for list of calls failed:', err.stack)
-      await new Promise((resolve) => { setTimeout(resolve, interval) })
+      await new Promise((resolve) => { setTimeout(resolve, interval) }) // eslint-disable-line no-loop-func
       retryCount -= 1
       interval *= 2
     }
