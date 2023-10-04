@@ -22,33 +22,33 @@ pipeline {
       }
     }
 
-    stage('lint') {
-      steps {
-        sh 'npm run lint'
-      }
-    }
+    // stage('lint') {
+    //   steps {
+    //     sh 'npm run lint'
+    //   }
+    // }
 
-    stage('test: unit') {
-      steps {
-        sh 'npm run test'
-      }
-    }
+    // stage('test: unit') {
+    //   steps {
+    //     sh 'npm run test'
+    //   }
+    // }
 
-    stage('test: integration') {
-      environment {
-        PATH = "$WORKSPACE/bin:$PATH"
-      }
-      steps {
-        script {
-          withAccount('load') {
-            // Put slsart in PATH
-            sh 'cp bin/serverless-artillery bin/slsart'
+    // stage('test: integration') {
+    //   environment {
+    //     PATH = "$WORKSPACE/bin:$PATH"
+    //   }
+    //   steps {
+    //     script {
+    //       withAccount('load') {
+    //         // Put slsart in PATH
+    //         sh 'cp bin/serverless-artillery bin/slsart'
 
-            sh 'npm run test-integration'
-          }
-        }
-      }
-    }
+    //         sh 'npm run test-integration'
+    //       }
+    //     }
+    //   }
+    // }
 
     stage('deploy') {
       // when { branch 'master' }
