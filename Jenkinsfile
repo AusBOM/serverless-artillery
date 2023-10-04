@@ -1,7 +1,7 @@
 library 'jenkins-shared-library'
 
 pipeline {
-  agent { label 'jenkins-agent-node-16' }
+  agent { label 'jenkins-agent-node-18' }
   environment {
     PATH = "$PATH:$HOME/.local/bin"
   }
@@ -14,7 +14,6 @@ pipeline {
 
     stage('initialise') {
       steps {
-        sh 'cat /etc/docker_image_creation_time'
         sh 'node --version'
         sh 'npm --version'
         sh 'npm ci'
