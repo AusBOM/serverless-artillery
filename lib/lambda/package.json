@@ -13,7 +13,11 @@
     "util-promisify": "^2.1.0"
   },
   "scripts": {
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "postinstall": "patch-package"
   },
-  "snyk": true
+  "snyk": true,
+  "devDependencies": {
+    "patch-package": "^8.0.0"
+  }
 }

@@ -1,0 +1,47 @@
+diff --git a/node_modules/artillery-plugin-publish-metrics/lib/cloudwatch.js b/node_modules/artillery-plugin-publish-metrics/lib/cloudwatch.js
+index 04d687e..1c773cb 100644
+--- a/node_modules/artillery-plugin-publish-metrics/lib/cloudwatch.js
++++ b/node_modules/artillery-plugin-publish-metrics/lib/cloudwatch.js
+@@ -42,6 +42,7 @@ const KNOWN_UNITS = {
+ 
+ class CloudWatchReporter {
+   constructor(config, events) {
++    console.log('PUBLISH METRICS - INITIALISING PLUGIN')
+     this.options = {
+       region: config.region || 'eu-west-1',
+       namespace: config.namespace || 'artillery',
+@@ -59,6 +60,7 @@ class CloudWatchReporter {
+     this.metrics = [];
+ 
+     events.on('stats', async (stats) => {
++      console.log('PUBLISH METRICS - RECEIVED STATS')
+       if (stats[COUNTERS_STATS]) {
+         for (const cKey in stats[COUNTERS_STATS]) {
+           this.addMetric(`${cKey}`, stats[COUNTERS_STATS][cKey], DEFAULT_UNIT);
+@@ -71,7 +73,7 @@ class CloudWatchReporter {
+             `${rKey}`,
+             stats[RATES_STATS][rKey],
+             (KNOWN_UNITS[RATES_STATS] && KNOWN_UNITS[RATES_STATS][rKey]) ||
+-              DEFAULT_UNIT
++            DEFAULT_UNIT
+           );
+         }
+       }
+@@ -90,7 +92,7 @@ class CloudWatchReporter {
+                 (KNOWN_UNITS[SUMMARIES_STATS] &&
+                   KNOWN_UNITS[SUMMARIES_STATS][sKey] &&
+                   KNOWN_UNITS[SUMMARIES_STATS][sKey][readingKey]) ||
+-                  DEFAULT_UNIT
++                DEFAULT_UNIT
+               );
+             }
+           }
+@@ -155,6 +157,8 @@ class CloudWatchReporter {
+   }
+ 
+   async putMetric() {
++
++    console.log('PUBLISH METRICS - ADD PUT METRIC:', this.metrics)
+     this.pendingRequests += 1;
+     const metrics = this.metrics;
+     this.metrics = [];
