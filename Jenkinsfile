@@ -1,7 +1,7 @@
 library 'jenkins-shared-library'
 
 pipeline {
-  agent { label 'jenkins-agent-node-16' }
+  agent { label 'jenkins-agent-node-20' }
   environment {
     PATH = "$PATH:$HOME/.local/bin"
   }

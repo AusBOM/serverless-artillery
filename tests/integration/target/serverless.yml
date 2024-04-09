@@ -2,7 +2,7 @@ service: slsart-integration-target
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   endpointType: regional
   iam:
     role:
