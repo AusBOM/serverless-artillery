@@ -18,7 +18,6 @@ pipeline {
         sh 'node --version'
         sh 'npm --version'
         sh 'npm ci'
-        sh 'aws --version'
       }
     }
 
