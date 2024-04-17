@@ -39,11 +39,11 @@ pipeline {
       }
       steps {
         script {
-          withAccount('load') {
+          withAccount('nonprod') {
             // Put slsart in PATH
             sh 'cp bin/serverless-artillery bin/slsart'
 
-            sh 'npm run test-integration'
+            sh 'DEBUG=true npm run test-integration'
           }
         }
       }
