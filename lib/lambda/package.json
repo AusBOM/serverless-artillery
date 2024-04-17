@@ -8,8 +8,9 @@
     "js-yaml": "^3.13.1",
     "lodash.merge": "^4.6.2",
     "lodash.omit": "^4.5.0",
-    "util-promisify": "^2.1.0",
-    "snyk": "^1.316.1"
+    "serverless": "^3.38.0",
+    "snyk": "^1.316.1",
+    "util-promisify": "^2.1.0"
   },
   "scripts": {
     "snyk-protect": "snyk protect"
