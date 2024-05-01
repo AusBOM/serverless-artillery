@@ -2,8 +2,10 @@ service: slsart-integration-target
 
 provider:
   name: aws
+  region: ap-southeast-2
   runtime: nodejs20.x
   endpointType: regional
+  deploymentBucket: digital-solutions-uat-serverlessdeploymentbucket
   iam:
     role:
       statements:
@@ -11,6 +13,11 @@ provider:
           Action:
             - logs:FilterLogEvents
           Resource: arn:aws:logs:*:*:log-group:/aws/lambda/slsart-integration-target-${opt:stage}-test:*
+
+package:
+  patterns:
+    - '*'
+    - '*/**'
 
 functions:
   test:

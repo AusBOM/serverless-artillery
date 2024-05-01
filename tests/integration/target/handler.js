@@ -6,6 +6,7 @@ const inst = {
   // abstract implementation of the aws lambda handler logic
   eventHandler: task =>
     (event, context, callback) => {
+      console.log(event)
       try {
         Promise.resolve(task(event))
           .then(inst.handlerSuccess)
@@ -31,6 +32,7 @@ const inst = {
 
   // the api list handler implementation
   list: persist => (event) => {
+    console.log(event)
     const { id } = event.pathParameters
     return persist.getRequests(id)
   },

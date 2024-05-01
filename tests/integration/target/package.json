@@ -1,0 +1,17 @@
+{
+  "name": "target",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "dependencies": {
+    "aws-sdk": "^2.1610.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^3.38.0"
+  }
+}

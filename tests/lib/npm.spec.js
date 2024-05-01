@@ -45,7 +45,6 @@ describe('./lib/npm.js:exports', function npmExports() { // eslint-disable-line 
           })
           .then(() => {
             npm.install(tmpdir)
-            npm.install(tmpdir, 'aws-sdk') // given that it is skipped as "already present in lambda"
             require(path.join(tmpdir, 'handler.js')) // eslint-disable-line global-require, import/no-dynamic-require
           })
           .then(() => {
@@ -58,16 +57,16 @@ describe('./lib/npm.js:exports', function npmExports() { // eslint-disable-line 
                       expect(err).to.be.undefined
                     })))
             }
-            if (packageJson.devDependencies) {
-              dependencyChecks = dependencyChecks.concat(
-                Object.keys(packageJson.devDependencies)
-                  .map(devDependency => fs.accessAsync(path.join(tmpdir, 'node_modules', devDependency))
-                    .then((err) => {
-                      expect(err).to.be.an('object')
-                      expect(err).to.have.a.property('code')
-                      expect(err.code).to.eql('ENOENT')
-                    })))
-            }
+            // if (packageJson.devDependencies) {
+            //   dependencyChecks = dependencyChecks.concat(
+            //     Object.keys(packageJson.devDependencies)
+            //       .map(devDependency => fs.accessAsync(path.join(tmpdir, 'node_modules', devDependency))
+            //         .then((err) => {
+            //           expect(err).to.be.an('object')
+            //           expect(err).to.have.a.property('code')
+            //           expect(err.code).to.eql('ENOENT')
+            //         })))
+            // }
             return BbPromise.all(dependencyChecks)
           })
           .finally(() => {

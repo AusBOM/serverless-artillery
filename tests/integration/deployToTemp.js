@@ -4,6 +4,8 @@ const childProcess = require('child_process')
 
 const fs = require('./fs')
 
+const branch = process.env.BRANCH_NAME ? process.env.BRANCH_NAME.substring(0, 12) : 'dev'
+
 const defaultTargetSourcePath = join(__dirname, 'target')
 const defaultSlsartSourcePath = join(__dirname, '../../lib/lambda')
 const defaultRoot = join(tmpdir(), 'slsart-integration')
@@ -43,11 +45,11 @@ const urlsFromDeployTargetOutput = (output) => {
 
 const defaultLog = process.env.DEBUG
   ? console.log
-  : () => {}
+  : () => { }
 
 const defaultWarn = process.env.DEBUG
   ? console.warn
-  : () => {}
+  : () => { }
 
 const impl = {
   findTargetSourceFiles: (ls = fs.ls, sourcePath = defaultTargetSourcePath) =>
@@ -58,10 +60,12 @@ const impl = {
 
   stageTarget: (
     findTargetSourceFiles = impl.findTargetSourceFiles(),
-    copyAll = fs.copyAll
+    copyAll = fs.copyAll,
+    exec = impl.execAsync()
   ) => destination =>
-    findTargetSourceFiles()
-      .then(copyAll(destination)),
+      findTargetSourceFiles()
+        .then(copyAll(destination))
+        .then(() => exec('npm i', { cwd: destination })),
 
   findSlsartSourceFiles: (
     sourcePath = defaultSlsartSourcePath,
@@ -76,9 +80,9 @@ const impl = {
     copyAll = fs.copyAll,
     exec = impl.execAsync()
   ) => destination =>
-    findSlsartSourceFiles()
-      .then(copyAll(destination))
-      .then(() => exec('npm i', { cwd: destination })),
+      findSlsartSourceFiles()
+        .then(copyAll(destination))
+        .then(() => exec('npm i', { cwd: destination })),
 
   execAsync: (exec = childProcess.exec,
     log = defaultLog,
@@ -86,13 +90,13 @@ const impl = {
     (command, options = {}) =>
       new Promise((resolve, reject) =>
         exec(command, options, (err, stdout, stderr) =>
-          (err
-            ? warn('execAsync ERROR: ', err, stderr, stdout) || reject(execError(err, stderr))
-            : log('execAsync SUCCESS: ', stdout) || resolve(stdout)))),
+        (err
+          ? warn('execAsync ERROR: ', err, stderr, stdout) || reject(execError(err, stderr))
+          : log('execAsync SUCCESS: ', stdout) || resolve(stdout)))),
 
   deploy: (exec = impl.execAsync()) =>
     directory =>
-      (process.env.DEBUG ? exec('sls deploy --verbose --stage integration-test', { cwd: directory }) : exec('sls deploy --stage integration-test', { cwd: directory })),
+      (process.env.DEBUG ? exec(`sls deploy --verbose --stage ${branch}`, { cwd: directory }) : exec(`sls deploy --stage ${branch}`, { cwd: directory })),
 
   tempLocation: (random = () => `${Date.now()}`, root = defaultRoot) =>
     (instanceId = random()) =>
@@ -131,7 +135,7 @@ const impl = {
     },
 
   remove: (exec = impl.execAsync()) =>
-    directory => exec('sls remove --stage integration-test', { cwd: directory }),
+    directory => exec(`sls remove --stage ${branch}`, { cwd: directory }),
 
   removeTempDeployment: (
     log = defaultLog,

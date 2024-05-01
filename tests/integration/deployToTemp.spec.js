@@ -21,6 +21,8 @@ const {
   },
 } = require('./deployToTemp')
 
+process.env.BRANCH_NAME = 'branch'
+
 const values = ([
   'directory',
   'err',
@@ -127,8 +129,8 @@ describe('./tests/integration/deployToTemp', () => {
 
   describe('#deploy', () => {
     const execAsyncOk = (...args) =>
-      deepStrictEqual(args, ['sls deploy --stage integration-test', { cwd: values.directory }]) ||
-        Promise.resolve()
+      deepStrictEqual(args, ['sls deploy --stage branch', { cwd: values.directory }]) ||
+      Promise.resolve()
     const error = new Error()
     const execAsyncFail = () => Promise.reject(error)
     it('should sls deploy in the given directory', () =>
@@ -159,8 +161,8 @@ describe('./tests/integration/deployToTemp', () => {
 
   describe('#remove', () => {
     const execAsyncOk = (...args) =>
-      deepStrictEqual(args, ['sls remove --stage integration-test', { cwd: values.directory }]) ||
-        Promise.resolve()
+      deepStrictEqual(args, ['sls remove --stage branch', { cwd: values.directory }]) ||
+      Promise.resolve()
     const error = new Error()
     const execAsyncFail = () => Promise.reject(error)
     it('should sls deploy in the given directory', () =>
