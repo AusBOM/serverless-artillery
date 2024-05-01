@@ -129,7 +129,7 @@ describe('./tests/integration/deployToTemp', () => {
 
   describe('#deploy', () => {
     const execAsyncOk = (...args) =>
-      deepStrictEqual(args, ['sls deploy --stage dev', { cwd: values.directory }]) ||
+      deepStrictEqual(args, ['sls deploy --stage test', { cwd: values.directory }]) ||
       Promise.resolve()
     const error = new Error()
     const execAsyncFail = () => Promise.reject(error)
@@ -161,7 +161,7 @@ describe('./tests/integration/deployToTemp', () => {
 
   describe('#remove', () => {
     const execAsyncOk = (...args) =>
-      deepStrictEqual(args, ['sls remove --stage dev', { cwd: values.directory }]) ||
+      deepStrictEqual(args, ['sls remove --stage test', { cwd: values.directory }]) ||
       Promise.resolve()
     const error = new Error()
     const execAsyncFail = () => Promise.reject(error)

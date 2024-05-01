@@ -4,8 +4,6 @@ const childProcess = require('child_process')
 
 const fs = require('./fs')
 
-const branch = process.env.BRANCH_NAME ? process.env.BRANCH_NAME.substring(0, 12) : 'dev'
-
 const defaultTargetSourcePath = join(__dirname, 'target')
 const defaultSlsartSourcePath = join(__dirname, '../../lib/lambda')
 const defaultRoot = join(tmpdir(), 'slsart-integration')
@@ -96,7 +94,7 @@ const impl = {
 
   deploy: (exec = impl.execAsync()) =>
     directory =>
-      (process.env.DEBUG ? exec(`sls deploy --verbose --stage ${branch}`, { cwd: directory }) : exec(`sls deploy --stage ${branch}`, { cwd: directory })),
+      (process.env.DEBUG ? exec('sls deploy --verbose --stage test', { cwd: directory }) : exec('sls deploy --stage test', { cwd: directory })),
 
   tempLocation: (random = () => `${Date.now()}`, root = defaultRoot) =>
     (instanceId = random()) =>
@@ -135,7 +133,7 @@ const impl = {
     },
 
   remove: (exec = impl.execAsync()) =>
-    directory => exec(`sls remove --stage ${branch}`, { cwd: directory }),
+    directory => exec('sls remove --stage test', { cwd: directory }),
 
   removeTempDeployment: (
     log = defaultLog,

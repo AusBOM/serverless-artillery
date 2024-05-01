@@ -6,8 +6,6 @@ const { writeFileSync } = require('fs')
 
 const { exec } = require('./deployToTemp')
 
-const branch = process.env.BRANCH_NAME ? process.env.BRANCH_NAME.substring(0, 12) : 'dev'
-
 const log = process.env.DEBUG
   ? console.log
   : () => { }
@@ -21,7 +19,7 @@ const executeScript = (tempFolder, slsartTempFolder, name, { script }, { testUrl
     { config: Object.assign({}, script.config, { target: testUrl }) }
   )
   writeFileSync(scriptFileName, safeDump(modifiedScript))
-  return exec(`slsart invoke -p ${scriptFileName} --stage ${branch}`, { cwd: slsartTempFolder })
+  return exec(`slsart invoke -p ${scriptFileName} --stage test`, { cwd: slsartTempFolder })
 }
 
 // return the expected duration of the script
