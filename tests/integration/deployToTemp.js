@@ -63,9 +63,9 @@ const impl = {
     copyAll = fs.copyAll,
     exec = impl.execAsync()
   ) => destination =>
-      findTargetSourceFiles()
-        .then(copyAll(destination))
-        .then(() => exec('npm i', { cwd: destination })),
+    findTargetSourceFiles()
+      .then(copyAll(destination))
+      .then(() => exec('npm i', { cwd: destination })),
 
   findSlsartSourceFiles: (
     sourcePath = defaultSlsartSourcePath,
@@ -80,9 +80,9 @@ const impl = {
     copyAll = fs.copyAll,
     exec = impl.execAsync()
   ) => destination =>
-      findSlsartSourceFiles()
-        .then(copyAll(destination))
-        .then(() => exec('npm i', { cwd: destination })),
+    findSlsartSourceFiles()
+      .then(copyAll(destination))
+      .then(() => exec('npm i', { cwd: destination })),
 
   execAsync: (exec = childProcess.exec,
     log = defaultLog,
@@ -90,9 +90,9 @@ const impl = {
     (command, options = {}) =>
       new Promise((resolve, reject) =>
         exec(command, options, (err, stdout, stderr) =>
-        (err
-          ? warn('execAsync ERROR: ', err, stderr, stdout) || reject(execError(err, stderr))
-          : log('execAsync SUCCESS: ', stdout) || resolve(stdout)))),
+          (err
+            ? warn('execAsync ERROR: ', err, stderr, stdout) || reject(execError(err, stderr))
+            : log('execAsync SUCCESS: ', stdout) || resolve(stdout)))),
 
   deploy: (exec = impl.execAsync()) =>
     directory =>
