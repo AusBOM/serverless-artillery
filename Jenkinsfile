@@ -43,7 +43,7 @@ pipeline {
             // Put slsart in PATH
             sh 'cp bin/serverless-artillery bin/slsart'
 
-            sh 'DEBUG=true npm run test-integration'
+            sh """DEBUG=true BRANCH_NAME=${env.BRANCH_NAME} npm run test-integration"""
           }
         }
       }

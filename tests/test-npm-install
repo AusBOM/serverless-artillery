@@ -7,11 +7,3 @@ then
   npm ci
   popd || return
 fi
-
-if [ ! -d "./tests/integration/target/node_modules" ]
-then
-  # Install node dependencies
-  pushd ./tests/integration/target || exit
-  npm ci
-  popd || return
-fi
