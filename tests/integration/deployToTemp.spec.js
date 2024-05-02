@@ -98,10 +98,7 @@ describe('./tests/integration/deployToTemp', () => {
         || Promise.resolve(values.result)
     const stageTargetOk =
       stageTarget(findTargetSourceFilesOk, copyAllOk)
-    it.skip('should copy all source files and write config', () => {
-      console.log(values.destination)
-      return stageTargetOk(values.destination, values.instanceId)
-    })
+    it.skip('should copy all source files and write config', () => stageTargetOk(values.destination, values.instanceId))
   })
 
   describe('#execAsync', () => {

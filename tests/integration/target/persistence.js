@@ -15,7 +15,6 @@ module.exports = (
     }
 
     let allRequests = []
-    console.log(params)
     const query = p => cloudWatchLogs.filterLogEvents(p).promise()
       .then((logEvents) => {
         const pathRequests = logEvents.events.map((event) => {
