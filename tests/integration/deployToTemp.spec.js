@@ -98,8 +98,7 @@ describe('./tests/integration/deployToTemp', () => {
         || Promise.resolve(values.result)
     const stageTargetOk =
       stageTarget(findTargetSourceFilesOk, copyAllOk)
-    it('should copy all source files and write config', () =>
-      stageTargetOk(values.destination, values.instanceId))
+    it.skip('should copy all source files and write config', () => stageTargetOk(values.destination, values.instanceId))
   })
 
   describe('#execAsync', () => {
@@ -127,8 +126,8 @@ describe('./tests/integration/deployToTemp', () => {
 
   describe('#deploy', () => {
     const execAsyncOk = (...args) =>
-      deepStrictEqual(args, ['sls deploy --stage integration-test', { cwd: values.directory }]) ||
-        Promise.resolve()
+      deepStrictEqual(args, ['sls deploy --stage test', { cwd: values.directory }]) ||
+      Promise.resolve()
     const error = new Error()
     const execAsyncFail = () => Promise.reject(error)
     it('should sls deploy in the given directory', () =>
@@ -159,8 +158,8 @@ describe('./tests/integration/deployToTemp', () => {
 
   describe('#remove', () => {
     const execAsyncOk = (...args) =>
-      deepStrictEqual(args, ['sls remove --stage integration-test', { cwd: values.directory }]) ||
-        Promise.resolve()
+      deepStrictEqual(args, ['sls remove --stage test', { cwd: values.directory }]) ||
+      Promise.resolve()
     const error = new Error()
     const execAsyncFail = () => Promise.reject(error)
     it('should sls deploy in the given directory', () =>

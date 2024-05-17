@@ -1,7 +1,7 @@
 library 'jenkins-shared-library'
 
 pipeline {
-  agent { label 'jenkins-agent-node-16' }
+  agent { label 'jenkins-agent-node-20' }
   environment {
     PATH = "$PATH:$HOME/.local/bin"
   }
@@ -18,7 +18,6 @@ pipeline {
         sh 'node --version'
         sh 'npm --version'
         sh 'npm ci'
-        sh 'aws --version'
       }
     }
 
@@ -40,11 +39,11 @@ pipeline {
       }
       steps {
         script {
-          withAccount('load') {
+          withAccount('nonprod') {
             // Put slsart in PATH
             sh 'cp bin/serverless-artillery bin/slsart'
 
-            sh 'npm run test-integration'
+            sh """DEBUG=true npm run test-integration"""
           }
         }
       }

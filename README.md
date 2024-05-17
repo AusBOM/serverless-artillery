@@ -1,5 +1,5 @@
 # NOTE
-This project has been forked from serverless-artillery to support serverless^3.0.0. The node runtime has also been updated from 10.x to 16.x as AWS is dropping support.
+This project has been forked from serverless-artillery to support serverless^3.0.0. The node runtime has also been updated from 10.x to 20.x as AWS is dropping support.
 
 # Introduction
 Combine [`serverless`](https://serverless.com) with [`artillery`](https://artillery.io) and you get `serverless-artillery` (a.k.a. `slsart`). 
@@ -445,7 +445,7 @@ Open `serverless.yml` with your favorite editor to see what it contains.
 service: serverless-artillery-XnBa473psJ
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   iam:
     role:
       statements:

@@ -4,6 +4,6 @@ if [ ! -d "./lib/lambda/node_modules" ]
 then
   # Install node dependencies
   pushd ./lib/lambda || exit
-  npm install
+  npm ci
   popd || return
 fi

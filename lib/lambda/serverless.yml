@@ -14,7 +14,7 @@ service: slsart
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
   iam:
     role:
       statements:

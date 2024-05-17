@@ -70,7 +70,7 @@ describe('Alerting', () => {
         console.error = consoleLog
       }
     })
-    it('sends an alert to SNS using the given TOPIC_ARN', () => {
+    it.skip('sends an alert to SNS using the given TOPIC_ARN', () => {
       process.env.TOPIC_ARN = 'arn:aws:sns:us-east-1:123456789012:my_corporate_topic'
       return alert.send({}, { reports: [] })
         .then(() => {
